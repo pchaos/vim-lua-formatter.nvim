@@ -66,6 +66,7 @@ function lua_format_format()
         table.insert(errors, 1, source_file)
 
         opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
+    prinr(errors)
         exec("setloclist(0, errors, 'r')")
         cmd("lwindow 5")
     end
