@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:39:29
+-- Last Modified: 2023-06-29 20:42:11
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -102,10 +102,7 @@ function lua_format_format()
 local executableExists = isExecutableExists("lua-format")
 if executableExists then
     print("lua-format 可执行文件存在")
-else
-    print("lua-format 可执行文件不存在")
-    return
-end
+
     local command = "lua-format" .. flags .. " 2> " .. error_file
     local output, exit_code = fn.systemlist(command, input)
 
@@ -133,6 +130,10 @@ end
         api.nvim_call_function('lwindow', {5})
         -- cmd("lwindow 5")
     end
+  else
+    print("lua-format 可执行文件不存在")
+    return
+end
 
     -- delete the temporary file
     fn.delete(error_file)
