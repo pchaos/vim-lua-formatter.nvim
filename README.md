@@ -1,6 +1,6 @@
 # vim-lua-format.nvim
 
-vim-lua-format.nvim is forked from vim-lua-format, and rewrite wth lua.
+vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrite wth lua.
 
 Lua vim formatter supported by [LuaFormatter](https://github.com/Koihik/LuaFormatter).
 
