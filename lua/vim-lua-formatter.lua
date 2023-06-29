@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:11:54
+-- Last Modified: 2023-06-29 20:13:16
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -95,7 +95,7 @@ function lua_format_format()
     end
 
   end
-    print(config_file,"flag:" .. sflags)
+    print(config_file,"flag:" .. flags)
     print("error_file:" .. error_file)
     printFileContent(config_file)
 
