@@ -1,5 +1,5 @@
--- Last Modified: 2023-06-29 11:07:39
-local ok, _ = pcall(require, 'lua_format_format')
+-- Last Modified: 2023-06-29 15:34:47
+local ok, lua_formatter = pcall(require, 'vim-lua-formatter')
 if not ok then
     -- not loaded
     print("function lua_format_format not found.")
