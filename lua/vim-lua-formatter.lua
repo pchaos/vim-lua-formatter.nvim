@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:49:24
+-- Last Modified: 2023-06-29 20:02:19
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -80,8 +80,8 @@ function lua_format_format()
     end
 
   end
-  print(config_file)
-  printFileContent(config_file)
+    print(config_file,flags)
+    printFileContent(config_file)
   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
 
     local command = "lua-format" .. flags .. " 2> " .. error_file
