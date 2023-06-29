@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:18:16
+-- Last Modified: 2023-06-29 19:22:10
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -7,7 +7,7 @@ local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 local api = vim.api
 
-function GetPluginDirectory()
+local function GetPluginDirectory()
     local scriptPath = debug.getinfo(1, 'S').source:sub(2)
     local pluginDirectory = vim.fn.fnamemodify(scriptPath, ':h')
     return pluginDirectory
@@ -56,7 +56,6 @@ function lua_format_format()
 
     -- use config file for formatting if available
     local config_file = fn.findfile(".lua-format", ".;")
-    print(config_file)
     if config_file ~= "" then 
       flags = flags .. " -c " .. config_file
     else
@@ -68,6 +67,7 @@ function lua_format_format()
     end
 
   end
+  print(config_file)
   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
 
     local command = "lua-format" .. flags .. " 2> " .. error_file
