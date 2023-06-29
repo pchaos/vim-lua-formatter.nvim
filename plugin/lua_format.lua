@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 18:07:28
+-- Last Modified: 2023-06-29 18:12:38
 if vim.api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then
   return
 end
@@ -12,12 +12,12 @@ o.cpo = vim.o.cpo .. 'vim' -- reset them to defaults
 local ok, lua_formatter = pcall(require, 'vim-lua-formatter')
 if not ok then
     -- not loaded
-    print("function lua_format_format not found.")
+    -- print("function lua_format_format not found.")
     require("vim-lua-formatter")
   return
 else
-    print(lua_formatter, "define lua_format as lua_format_format")
-  function lua_format() lua_format_format() end
+    -- print(lua_formatter, "define lua_format as lua_format_format")
+  function lua_format() lua_format.format() end
 end
 
 o.cpo = save_cpo -- and restore after
