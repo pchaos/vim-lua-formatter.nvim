@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:15:38
+-- Last Modified: 2023-06-29 19:18:16
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -56,14 +56,16 @@ function lua_format_format()
 
     -- use config file for formatting if available
     local config_file = fn.findfile(".lua-format", ".;")
-    if config_file ~= "" then flags = flags .. " -c " .. config_file
-  else
+    print(config_file)
+    if config_file ~= "" then 
+      flags = flags .. " -c " .. config_file
+    else
     local pluginDirectory = GetPluginDirectory()
     print("插件所在目录：" .. pluginDirectory)
         config_file = fn.findfile(".lua-format.default", pluginDirectory)
     if config_file ~= "" then
     flags = flags .. " -c " .. config_file
-        end
+    end
 
   end
   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
