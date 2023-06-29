@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:08:26
+-- Last Modified: 2023-06-29 20:11:54
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -96,7 +96,8 @@ function lua_format_format()
 
   end
     print(config_file,"flag:" .. sflags)
-    printFileContent(config_file. "error_file:" .. error_file)
+    print("error_file:" .. error_file)
+    printFileContent(config_file)
 
 local executableExists = isExecutableExists("lua-format")
 if executableExists then
