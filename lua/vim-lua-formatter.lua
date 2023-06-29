@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:13:16
+-- Last Modified: 2023-06-29 20:39:29
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -104,10 +104,12 @@ if executableExists then
     print("lua-format 可执行文件存在")
 else
     print("lua-format 可执行文件不存在")
+    return
 end
     local command = "lua-format" .. flags .. " 2> " .. error_file
     local output, exit_code = fn.systemlist(command, input)
 
+  print("output:" .. output)
     if exit_code == 0 then -- all right
         lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
