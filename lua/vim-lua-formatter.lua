@@ -73,3 +73,4 @@ function lua_format_format()
     -- delete the temporary file
     fn.delete(error_file)
 end
+print("vum-lua-formatter functions")
