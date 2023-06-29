@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:44:04
+-- Last Modified: 2023-06-29 19:46:25
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -43,7 +43,8 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     end
 
     -- redraw windows to prevent invalid data display
-    cmd("redraw!")
+    api.nvim_call_function("redraw!")
+  -- cmd("redraw!")
 end
 
 function lua_format_format()
