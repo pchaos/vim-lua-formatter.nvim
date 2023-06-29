@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:02:19
+-- Last Modified: 2023-06-29 20:08:26
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -24,7 +24,21 @@ local function printFileContent(filePath)
     end
 end
 
+local function isExecutableExists(executable)
+    local command = "command -v " .. executable
 
+    -- 执行命令并获取结果
+    local handle = io.popen(command)
+    local result = handle:read("*a")
+    handle:close()
+
+    -- 判断结果是否为空
+    if result ~= "" then
+        return true
+    else
+        return false
+    end
+end
 
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
     -- prevent out of range in cickle
@@ -72,6 +86,7 @@ function lua_format_format()
     if config_file ~= "" then 
       flags = flags .. " -c " .. config_file
     else
+    -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
     local pluginDirectory = GetPluginDirectory()
     print("插件所在目录：" .. pluginDirectory)
         config_file = fn.findfile(".lua-format.default", "pluginDirectory;pluginDirectory/**")
@@ -80,10 +95,15 @@ function lua_format_format()
     end
 
   end
-    print(config_file,flags)
-    printFileContent(config_file)
-  -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
+    print(config_file,"flag:" .. sflags)
+    printFileContent(config_file. "error_file:" .. error_file)
 
+local executableExists = isExecutableExists("lua-format")
+if executableExists then
+    print("lua-format 可执行文件存在")
+else
+    print("lua-format 可执行文件不存在")
+end
     local command = "lua-format" .. flags .. " 2> " .. error_file
     local output, exit_code = fn.systemlist(command, input)
 
