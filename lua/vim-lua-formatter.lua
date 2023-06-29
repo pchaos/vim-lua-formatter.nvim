@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:22:10
+-- Last Modified: 2023-06-29 19:32:54
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -77,8 +77,10 @@ function lua_format_format()
         lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
         -- clear message buffer
-        cmd("lexpr \"\"")
-        cmd("lwindow")
+        api.nvim_call_function('lexpr', {""})
+        api.nvim_call_function('lwindow', {})
+        -- cmd("lexpr \"\"")
+        -- cmd("lwindow")
     else -- we got an error
         local errors = fn.readfile(error_file)
 
@@ -91,7 +93,8 @@ function lua_format_format()
         --     print(k, v)
         -- end
         api.nvim_call_function('setloclist', {0, errors, 'r'})
-        cmd("lwindow 5")
+        api.nvim_call_function('lwindow', {5})
+        -- cmd("lwindow 5")
     end
 
     -- delete the temporary file
