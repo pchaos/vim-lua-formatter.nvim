@@ -70,7 +70,7 @@ function lua_format_format()
       for k, v in pairs(errors) do
       print(k, v)
     end
-exec("setloclist(0, errors)", 'r')
+  api.nvim_call_function('setloclist', {0, errors, 'r'})
         cmd("lwindow 5")
     end
 
