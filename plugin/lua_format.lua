@@ -1,9 +1,8 @@
--- Last Modified: 2023-06-29 17:45:26
+-- Last Modified: 2023-06-29 17:47:18
 if vim.api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then
   return
 end
 
-local api = vim.api
 local cmd=vim.cmd
 local o=vim.o
 pp
@@ -28,18 +27,11 @@ _G.loaded_vim_lua_formatter= 1
 --   autocmd FileType lua nnoremap <buffer> <c-l> :call lua_format()<cr>
 --   autocmd BufWritePre *.lua call lua_format()
 -- ]])
--- cmd([[
---   autocmd FileType lua nnoremap <buffer> <c-l> :call lua_format()<cr>
--- ]])
-
--- cmd([[
---   autocmd BufWritePre *.lua call lua_format()
--- ]])
-api.nvim_command([[
+cmd([[
   autocmd FileType lua nnoremap <buffer> <c-l> :call lua_format()<cr>
 ]])
 
-api.nvim_command([[
+cmd([[
   autocmd BufWritePre *.lua call lua_format()
 ]])
 
