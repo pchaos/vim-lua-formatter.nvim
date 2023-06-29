@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:04:56
+-- Last Modified: 2023-06-29 19:08:13
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -6,14 +6,8 @@ local fn = vim.fn -- call Vim functions
 local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 local api = vim.api
-ffunction GetPluginDirectory()
-    local scriptPath = debug.getinfo(1, 'S').source:sub(2)
-    local pluginDirectory = vim.fn.fnamemodify(scriptPath, ':h')
-    return pluginDirectory
-end
 
-local pluginDirectory = GetPluginDirectory()
-print("插件所在目录：" .. pluginDirectory)unction GetPluginDirectory()
+function GetPluginDirectory()
     local scriptPath = debug.getinfo(1, 'S').source:sub(2)
     local pluginDirectory = vim.fn.fnamemodify(scriptPath, ':h')
     return pluginDirectory
@@ -21,6 +15,7 @@ end
 
 local pluginDirectory = GetPluginDirectory()
 print("插件所在目录：" .. pluginDirectory)
+
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
     -- prevent out of range in cickle
     local min_len = math.min(#input, #output)
