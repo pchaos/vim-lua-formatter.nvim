@@ -1,3 +1,5 @@
+-- Last Modified: 2023-06-29 18:59:49
+
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 local fn = vim.fn -- call Vim functions
@@ -48,6 +50,7 @@ function lua_format_format()
     -- use config file for formatting if available
     local config_file = fn.findfile(".lua-format", ".;")
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
+  -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
 
     local command = "lua-format" .. flags .. " 2> " .. error_file
     local output, exit_code = fn.systemlist(command, input)
@@ -66,10 +69,9 @@ function lua_format_format()
         table.insert(errors, 1, source_file)
 
         opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-        print(errors)
-        for k, v in pairs(errors) do
-            print(k, v)
-        end
+        -- for k, v in pairs(errors) do
+        --     print(k, v)
+        -- end
         api.nvim_call_function('setloclist', {0, errors, 'r'})
         cmd("lwindow 5")
     end
@@ -77,4 +79,3 @@ function lua_format_format()
     -- delete the temporary file
     fn.delete(error_file)
 end
--- print("vum-lua-formatter functions")
