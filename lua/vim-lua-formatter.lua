@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:32:54
+-- Last Modified: 2023-06-29 19:44:04
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -61,7 +61,7 @@ function lua_format_format()
     else
     local pluginDirectory = GetPluginDirectory()
     print("插件所在目录：" .. pluginDirectory)
-        config_file = fn.findfile(".lua-format.default", pluginDirectory)
+        config_file = fn.findfile(".lua-format.default", "pluginDirectory;pluginDirectory/**")
     if config_file ~= "" then
     flags = flags .. " -c " .. config_file
     end
