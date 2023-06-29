@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 18:22:08
+-- Last Modified: 2023-06-29 18:24:17
 if vim.api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then
   return
 end
@@ -17,7 +17,7 @@ if not ok then
   return
 else
     -- print(lua_formatter, "define lua_format as lua_format_format")
-  function lua_format() lua_formatter.lua_format_format() end
+  function lua_format() lua_format_format() end
 end
 
 o.cpo = save_cpo -- and restore after
@@ -36,4 +36,3 @@ cmd([[
   autocmd BufWritePre *.lua lua lua_format()
 ]])
 
--- print("end of vim-lua-formatter!")
