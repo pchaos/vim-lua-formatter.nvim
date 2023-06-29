@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 19:46:25
+-- Last Modified: 2023-06-29 19:49:24
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -12,6 +12,18 @@ local function GetPluginDirectory()
     local pluginDirectory = vim.fn.fnamemodify(scriptPath, ':h')
     return pluginDirectory
 end
+
+local function printFileContent(filePath)
+    local file = io.open(filePath, "r")
+    if file then
+        local content = file:read("*a")
+        io.close(file)
+        print(content)
+    else
+        print("无法打开文件：" .. filePath)
+    end
+end
+
 
 
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
@@ -69,6 +81,7 @@ function lua_format_format()
 
   end
   print(config_file)
+  printFileContent(config_file)
   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
 
     local command = "lua-format" .. flags .. " 2> " .. error_file
