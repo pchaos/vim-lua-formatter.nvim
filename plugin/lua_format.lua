@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 17:38:57
+-- Last Modified: 2023-06-29 17:41:11
 if vim.api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then
   return
 end
@@ -35,3 +35,4 @@ cmd([[
   autocmd BufWritePre *.lua call lua_format()
 ]])
 
+print("end of vim-lua-formatter!")
