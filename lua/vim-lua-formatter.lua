@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 20:44:08
+-- Last Modified: 2023-06-29 20:47:48
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -37,6 +37,12 @@ local function isExecutableExists(executable)
         return true
     else
         return false
+    end
+end
+
+function printValue(value)
+    for k, v in pairs(value) do
+        print(k, v)
     end
 end
 
@@ -107,7 +113,7 @@ if executableExists then
     local output, exit_code = fn.systemlist(command, input)
 
   print("output:")
-  print( output)
+  printValue(output)
     if exit_code == 0 then -- all right
         lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
