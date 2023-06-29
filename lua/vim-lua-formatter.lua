@@ -67,6 +67,9 @@ function lua_format_format()
 
         opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
       print(errors)
+    for k, v in pairs(errors) do
+  print(k, v)
+end
         exec("setloclist(0, errors, 'r')")
         cmd("lwindow 5")
     end
@@ -74,4 +77,4 @@ function lua_format_format()
     -- delete the temporary file
     fn.delete(error_file)
 end
-print("vum-lua-formatter functions")
+-- print("vum-lua-formatter functions")
