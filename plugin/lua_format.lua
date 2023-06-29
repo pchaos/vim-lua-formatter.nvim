@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 16:40:32
+-- Last Modified: 2023-06-29 16:46:53
 --
 local ok, lua_formatter = pcall(require, 'vim-lua-formatter')
 if not ok then
@@ -12,6 +12,6 @@ else
 end
 
 vim.cmd([[
-  autocmd FileType lua nnoremap <buffer> <c-l> :call LuaFormat()<cr>
-  autocmd BufWritePre *.lua call LuaFormat()
+  autocmd FileType lua nnoremap <buffer> <c-l> :call lua_format()<cr>
+  autocmd BufWritePre *.lua call lua_format()
 ]])
