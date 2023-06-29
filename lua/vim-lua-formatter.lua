@@ -5,7 +5,7 @@ local g = vim.g -- global variables
 local opt = vim.opt -- global/buffer/windows-scoped options
 local api = vim.api
 
-function lua_format_CopyDiffToBuffer(input, output, bufname)
+local function lua_format_CopyDiffToBuffer(input, output, bufname)
     -- prevent out of range in cickle
     local min_len = math.min(#input, #output)
 
