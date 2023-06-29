@@ -10,11 +10,11 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     local min_len = math.min(#input, #output)
 
     -- copy all lines that were changed
-    for i = 1, min_len - 1 do
+    for i = 1, min_len do
         local output_line = output[i]
         local input_line = input[i]
         if input_line ~= output_line then
-            api.nvim_buf_set_lines(0, i - 1, i, false, {output_line})
+            api.nvim_buf_set_lines(0, i, i, false, {output_line})
         end
     end
 
@@ -22,7 +22,7 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     if #input ~= #output then
         if min_len == #output then
             -- remove all extra lines from input
-            api.nvim_buf_set_lines(0, min_len, -1, false, {})
+            api.nvim_buf_set_lines(0, min_len + 1, -1, false, {})
         else
             -- append all extra lines from output
             local extra_lines = {}
@@ -49,8 +49,8 @@ function lua_format_format()
     local config_file = fn.findfile(".lua-format", ".;")
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
 
-    local cmd = "lua-format" .. flags .. " 2> " .. error_file
-    local output, exit_code = fn.systemlist(cmd, input)
+    local command = "lua-format" .. flags .. " 2> " .. error_file
+    local output, exit_code = fn.systemlist(command, input)
 
     if exit_code == 0 then -- all right
         lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
@@ -67,10 +67,10 @@ function lua_format_format()
 
         opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
         print(errors)
-      for k, v in pairs(errors) do
-      print(k, v)
-    end
-  api.nvim_call_function('setloclist', {0, errors, 'r'})
+        for k, v in pairs(errors) do
+            print(k, v)
+        end
+        api.nvim_call_function('setloclist', {0, errors, 'r'})
         cmd("lwindow 5")
     end
 
