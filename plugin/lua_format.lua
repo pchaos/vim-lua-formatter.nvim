@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-29 17:52:41
+-- Last Modified: 2023-06-29 18:07:28
 if vim.api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then
   return
 end
@@ -29,11 +29,11 @@ _G.loaded_vim_lua_formatter= 1
 -- ]])
 
 cmd([[
-  autocmd FileType lua nnoremap <buffer> <c-l> :call lua_format()<cr>
+  autocmd FileType lua nnoremap <buffer> <c-l> :lua lua_format()<cr>
 ]])
 
 cmd([[
-  autocmd BufWritePre *.lua call lua_format()
+  autocmd BufWritePre *.lua lua lua_format()
 ]])
 
-print("end of vim-lua-formatter!")
+-- print("end of vim-lua-formatter!")
