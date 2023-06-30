@@ -62,10 +62,10 @@ local function getConfigFile()
             local found_file = fn.findfile(".lua-format.default", currentDirectory)
       if found_file and found_file ~= "" then
         config_file = found_file
-    print("getConfigFile found: " .. config_file)
+    -- print("getConfigFile found: " .. config_file)
         break
       end
-    print("getConfigFile: " .. config_file)
+    -- print("getConfigFile: " .. config_file)
 
     local parentDirectory = currentDirectory:gsub('[^/]+$', '')
     if parentDirectory == currentDirectory then
@@ -78,7 +78,7 @@ local function getConfigFile()
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
   end
 
-    print("getConfigFile return: " .. config_file)
+    -- print("getConfigFile return: " .. config_file)
   return config_file, flags
 end
 
@@ -147,7 +147,7 @@ function lua_format_format()
 
     -- print("exit_code:" .. exit_code)
     print("output:")
-    -- printValue(output)
+    printValue(output)
     if #output > 0 then -- all right
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
