@@ -134,9 +134,9 @@ function lua_format_format()
 
   -- end
   local configFile, flags = getConfigFile()
-  print(config_file, " flags:" .. flags)
+  print(configFile, " flags:" .. flags)
   print("error_file:" .. error_file)
-  printFileContent(config_file)
+  printFileContent(configFile)
 
   local executableExists = isExecutableExists("lua-format")
   if executableExists then
