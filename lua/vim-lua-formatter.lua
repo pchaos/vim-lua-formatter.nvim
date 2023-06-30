@@ -167,10 +167,14 @@ function lua_format_format()
 
       -- insert filename of current buffer in front of the list. Needed for errorformat
       local source_file = fn.bufname("%")
-      table.insert(errors, 1, source_file)
+      -- table.insert(errors, 1, source_file)
+
+-- Insert filename of current buffer at the beginning of the list
+table.insert(errors, 1, {source_file, ''}) -- Add an empty quickfix text
+
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-      -- api.nvim_set_loclist(0, errors)
-      api.nvim_call_function('setloclist', { 0, errors })
+      api.nvim_set_loclist(0, errors)
+      -- api.nvim_call_function('setloclist', { 0, errors })
       -- api.nvim_call_function('lwindow', {5})
       -- 切换到窗口编号 5
       api.nvim_set_current_win(current_win)
