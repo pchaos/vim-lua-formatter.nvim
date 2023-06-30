@@ -146,10 +146,10 @@ function lua_format_format()
     output = fn.systemlist(command, input)
     -- local output = fn.system(command, input)
     print("input:" .. #input)
-    printValue(input)
-    print(command)
+    -- printValue(input)
+    -- print(command)
     print(" output:" .. #output)
-    print(command)
+    -- print(command)
     -- printValue(output)
     if #output > 0 then -- all right
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
@@ -163,14 +163,15 @@ function lua_format_format()
       -- cmd("lexpr \"\"")
       -- cmd("lwindow")
     else -- we got an error
+      print("Something error!")
       local errors = fn.readfile(error_file)
 
       -- insert filename of current buffer in front of the list. Needed for errorformat
       local source_file = fn.bufname("%")
-      -- table.insert(errors, 1, source_file)
+      table.insert(errors, 1, source_file)
 
 -- Insert filename of current buffer at the beginning of the list
-table.insert(errors, 1, {source_file, ''}) -- Add an empty quickfix text
+-- table.insert(errors, 1, {source_file, ''}) -- Add an empty quickfix text
 
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
       api.nvim_command(":call setloclist(0, " .. vim.inspect(errors) .. ")")
