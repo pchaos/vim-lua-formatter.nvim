@@ -59,7 +59,7 @@ local function getConfigFile()
     local currentDirectory=pluginDirectory
     while true do
     config_file = fn.findfile(".lua-format.default", currentDirectory)
-    if filePath ~= '' then
+    if config_file~= '' then
      break 
     end
 
