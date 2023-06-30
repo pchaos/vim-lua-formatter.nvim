@@ -59,10 +59,11 @@ local function getConfigFile()
     print("插件所在目录：" .. pluginDirectory)
     local currentDirectory=pluginDirectory
     while true do
-    config_file = fn.findfile(".lua-format.default", currentDirectory)
-    if config_file and config_file~= '' then
-     break 
-    end
+            local found_file = fn.findfile(".lua-format.default", currentDirectory)
+      if found_file ~= "" then
+        config_file = found_file
+        break
+      end
     print("getConfigFile: " .. config_file)
 
     local parentDirectory = currentDirectory:gsub('[^/]+$', '')
