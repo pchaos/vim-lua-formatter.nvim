@@ -144,10 +144,10 @@ function lua_format_format()
     --
     local command = "lua-format " .. flags .. " 2> " .. error_file
     local output = fn.systemlist(command, input)
-
-    -- print("exit_code:" .. exit_code)
-    print("output:")
-    printValue(output)
+    -- local output = fn.system(command, input)
+    print("input:" .. input)
+    print("output:" .. #output)
+    -- printValue(output)
     if #output > 0 then -- all right
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
