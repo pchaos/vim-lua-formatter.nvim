@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-30 12:42:49
+-- Last Modified: 2023-06-30 18:34:24
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -41,11 +41,28 @@ local function isExecutableExists(executable)
 end
 
 function printValue(value) for k, v in pairs(value) do print(k, v) end end
+local function getConfigFile()
+  -- 查找当前文件所在所目录以及递归上级目录下的".lua-format"文件，找不到，就找本插件目录下的".lua-format.default"作为默认lua-fomat配置文件
+  local flags = " -i "
+  local config_file = fn.findfile(".lua-format", ".;")
 
+  if config_file ~= "" then
+    flags = flags .. " -c " .. config_file
+  else
+    local pluginDirectory = GetPluginDirectory()
+    print("插件所在目录：" .. pluginDirectory)
+    config_file = fn.findfile(".lua-format.default", pluginDirectory .. ";" .. pluginDirectory .. "/**")
+
+    if config_file ~= "" then flags = flags .. " -c " .. config_file end
+  end
+
+  return config_file, flags
+end
+local cmd = vim.cmd -- execute Vim commands
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
-
+  local exec = vim.api.nvim_exec -- execute Vimscript
   -- copy all lines that were changed
   for i = 1, min_len do
     local output_line = output[i]
@@ -72,35 +89,37 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
 end
 
 function lua_format_format()
+  -- 获取当前活动窗口
+  local current_win = api.nvim_get_current_win()
+
   local input = api.nvim_buf_get_lines(0, 0, -1, false)
 
   -- create a temporary file to capture error messages
   local error_file = fn.tempname()
 
-  local flags = " -i "
+  -- local flags = " -i "
 
-  -- use config file for formatting if available
-  local config_file = fn.findfile(".lua-format", ".;")
-  if config_file ~= "" then
-    flags = flags .. " -c " .. config_file
-  else
-    -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
-    local pluginDirectory = GetPluginDirectory()
-    print("插件所在目录：" .. pluginDirectory)
-    config_file = fn.findfile(".lua-format.default", "pluginDirectory;pluginDirectory/**")
-    if config_file ~= "" then flags = flags .. " -c " .. config_file end
+  -- -- use config file for formatting if available
+  -- local config_file = fn.findfile(".lua-format", ".;")
+  -- if config_file ~= "" then
+  --   flags = flags .. " -c " .. config_file
+  -- else
+  --   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
+  --   local pluginDirectory = GetPluginDirectory()
+  --   print("插件所在目录：" .. pluginDirectory)
+  --   config_file = fn.findfile(".lua-format.default", "pluginDirectory;pluginDirectory/**")
+  --   if config_file ~= "" then flags = flags .. " -c " .. config_file end
 
-  end
+  -- end
+  local configFile, flags = getConfigFile()
   print(config_file, "flag:" .. flags)
   print("error_file:" .. error_file)
   printFileContent(config_file)
 
   local executableExists = isExecutableExists("lua-format")
   if executableExists then
-    print("lua-format 可执行文件存在")
+    -- print("可执行文件lua-format存在")
     --
-    -- 获取当前活动窗口
-    local current_win = vim.api.nvim_get_current_win()
     local command = "lua-format" .. flags .. " 2> " .. error_file
     local output = fn.systemlist(command, input)
 
@@ -115,7 +134,7 @@ function lua_format_format()
 
       -- api.nvim_call_function('lexpr', { "" })
       -- api.nvim_call_function('lwindow', {})
-      vim.api.nvim_set_current_win(current_win)
+      api.nvim_set_current_win(current_win)
       -- cmd("lexpr \"\"")
       -- cmd("lwindow")
     else -- we got an error
@@ -124,22 +143,17 @@ function lua_format_format()
       -- insert filename of current buffer in front of the list. Needed for errorformat
       local source_file = fn.bufname("%")
       table.insert(errors, 1, source_file)
-
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-      -- for k, v in pairs(errors) do
-      --     print(k, v)
-      -- end
       api.nvim_call_function('setloclist', { 0, errors, 'r' })
       -- api.nvim_call_function('lwindow', {5})
       -- 切换到窗口编号 5
-      vim.api.nvim_set_current_win(5)
-      -- cmd("lwindow 5")
+      api.nvim_set_current_win(current_win)
+      -- delete the temporary file
+      fn.delete(error_file)
     end
   else
-    print("lua-format 可执行文件不存在")
+    print("可执行文件lua-format不存在")
     return
   end
 
-  -- delete the temporary file
-  fn.delete(error_file)
 end

@@ -30,4 +30,6 @@ single_quote_to_double_quote: false
 spaces_around_equals_in_field: true
 line_breaks_after_function_body: 1
 line_separator: input
-Modified: 2023-06-28 11:33:46
+Modified: 2023-06-30 18:02:25
+vimluaformatter: true
+
