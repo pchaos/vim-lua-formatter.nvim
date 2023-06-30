@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-30 18:34:24
+-- Last Modified: 2023-06-30 18:44:30
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -14,13 +14,17 @@ local function GetPluginDirectory()
 end
 
 local function printFileContent(filePath)
-  local file = io.open(filePath, "r")
-  if file then
-    local content = file:read("*a")
-    io.close(file)
-    print(content)
+  if filePath and filePath ~= "" then  -- 判断文件名是否为空或者空字符串
+    local file = io.open(filePath, "r")
+    if file then
+      local content = file:read("*a")
+      io.close(file)
+      print(content)
+    else
+      print("无法打开文件：" .. filePath)
+    end
   else
-    print("无法打开文件：" .. filePath)
+    print("文件名不能为空")
   end
 end
 
