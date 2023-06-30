@@ -145,7 +145,8 @@ function lua_format_format()
     local command = "lua-format " .. flags .. " 2> " .. error_file
     local output = fn.systemlist(command, input)
     -- local output = fn.system(command, input)
-    print("input:" .. input)
+    print("input:" .. #input)
+    printValue(input)
     print("output:" .. #output)
     -- printValue(output)
     if #output > 0 then -- all right
