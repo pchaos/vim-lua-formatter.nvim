@@ -47,6 +47,7 @@ end
 function printValue(value) for k, v in pairs(value) do print(k, v) end end
 local function getConfigFile()
   -- 查找当前文件所在所目录以及递归上级目录下的".lua-format"文件，找不到，就找本插件目录下的".lua-format.default"作为默认lua-fomat配置文件
+  -- 从当前目录开始逐级向上查找 ".lua-format.default" 文件。如果找到文件，将返回文件的路径；如果没有找到，则返回空字符串。
   local flags = " -i "
   local config_file = fn.findfile(".lua-format", ".;")
 
@@ -55,7 +56,20 @@ local function getConfigFile()
   else
     local pluginDirectory = GetPluginDirectory()
     print("插件所在目录：" .. pluginDirectory)
-    config_file = fn.findfile(".lua-format.default", pluginDirectory .. ";" .. pluginDirectory .. "/**")
+    local currentDirectory=pluginDirectory
+    while true do
+    config_file = fn.findfile(".lua-format.default", currentDirectory)
+    if filePath ~= '' then
+     break 
+    end
+
+    local parentDirectory = currentDirectory:gsub('[^/]+$', '')
+    if parentDirectory == currentDirectory then
+      break
+    end
+
+    currentDirectory = parentDirectory
+  end
 
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
   end
