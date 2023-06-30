@@ -136,13 +136,13 @@ function lua_format_format()
   local configFile, flags = getConfigFile()
   print(configFile, " flags:" .. flags)
   print("error_file:" .. error_file)
-  printFileContent(configFile)
+  -- printFileContent(configFile)
 
   local executableExists = isExecutableExists("lua-format")
   if executableExists then
-    -- print("可执行文件lua-format存在")
+    print("可执行文件lua-format存在")
     --
-    local command = "lua-format" .. flags .. " 2> " .. error_file
+    local command = "lua-format " .. flags .. " 2> " .. error_file
     local output = fn.systemlist(command, input)
 
     -- print("exit_code:" .. exit_code)
