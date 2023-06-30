@@ -61,7 +61,8 @@ local function getConfigFile()
     while true do
             local found_file = fn.findfile(".lua-format.default", currentDirectory)
       if found_file ~= "" then
-        config_file = currentDirectory .. '/' .. found_file
+        config_file = found_file
+    print("getConfigFile found: " .. config_file)
         break
       end
     print("getConfigFile: " .. config_file)
@@ -77,7 +78,7 @@ local function getConfigFile()
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
   end
 
-    print("getConfigFile2: " .. config_file)
+    print("getConfigFile: " .. config_file)
   return config_file, flags
 end
 
