@@ -173,7 +173,7 @@ function lua_format_format()
 table.insert(errors, 1, {source_file, ''}) -- Add an empty quickfix text
 
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-      api.nvim_set_loclist(0, errors)
+      api.nvim_command("call setloclist(0, " .. vim.inspect(errors) .. ")")
       -- api.nvim_call_function('setloclist', { 0, errors })
       -- api.nvim_call_function('lwindow', {5})
       -- 切换到窗口编号 5
