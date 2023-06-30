@@ -143,10 +143,11 @@ function lua_format_format()
     print("可执行文件lua-format存在")
     --
     local command = "lua-format " .. flags .. " 2> " .. error_file
-    local output = fn.systemlist(command, input)
-    -- local output = fn.system(command, input)
+    -- local output = fn.systemlist(command, input)
+    local output = fn.system(command, input)
     print("input:" .. #input)
     printValue(input)
+    print(command)
     print(" output:" .. #output)
     print(command)
     -- printValue(output)
