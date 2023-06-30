@@ -169,9 +169,8 @@ function lua_format_format()
       local source_file = fn.bufname("%")
       table.insert(errors, 1, source_file)
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-      fn.lexpr(errors)
       -- api.nvim_set_loclist(0, errors)
-      -- api.nvim_call_function('setloclist', { 0, errors, 'r' })
+      api.nvim_call_function('setloclist', { 0, errors })
       -- api.nvim_call_function('lwindow', {5})
       -- 切换到窗口编号 5
       api.nvim_set_current_win(current_win)
