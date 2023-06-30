@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-30 12:35:49
+-- Last Modified: 2023-06-30 12:42:49
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -111,7 +111,9 @@ function lua_format_format()
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
       -- clear message buffer
-      api.nvim_call_function('lexpr', { "" })
+      vim.cmd("messages clear")
+
+      -- api.nvim_call_function('lexpr', { "" })
       -- api.nvim_call_function('lwindow', {})
       vim.api.nvim_set_current_win(current_win)
       -- cmd("lexpr \"\"")
