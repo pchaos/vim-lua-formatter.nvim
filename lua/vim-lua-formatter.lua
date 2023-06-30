@@ -63,6 +63,7 @@ local function getConfigFile()
     if config_file and config_file~= '' then
      break 
     end
+    print("getConfigFile: " .. config_file)
 
     local parentDirectory = currentDirectory:gsub('[^/]+$', '')
     if parentDirectory == currentDirectory then
