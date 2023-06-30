@@ -9,7 +9,7 @@ local api = vim.api
 
 local function GetPluginDirectory()
   local scriptPath = debug.getinfo(1, 'S').source:sub(2)
-  local pluginDirectory = vim.fn.fnamemodify(scriptPath, ':h')
+  local pluginDirectory = fn.fnamemodify(scriptPath, ':h')
   return pluginDirectory
 end
 
@@ -45,6 +45,7 @@ local function isExecutableExists(executable)
 end
 
 function printValue(value) for k, v in pairs(value) do print(k, v) end end
+
 local function getConfigFile()
   -- 查找当前文件所在所目录以及递归上级目录下的".lua-format"文件，找不到，就找本插件目录下的".lua-format.default"作为默认lua-fomat配置文件
   -- 从当前目录开始逐级向上查找 ".lua-format.default" 文件。如果找到文件，将返回文件的路径；如果没有找到，则返回空字符串。
@@ -59,7 +60,7 @@ local function getConfigFile()
     local currentDirectory=pluginDirectory
     while true do
     config_file = fn.findfile(".lua-format.default", currentDirectory)
-    if config_file~= '' then
+    if config_file and config_file~= '' then
      break 
     end
 
@@ -76,11 +77,10 @@ local function getConfigFile()
 
   return config_file, flags
 end
-local cmd = vim.cmd -- execute Vim commands
+
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
-  local exec = vim.api.nvim_exec -- execute Vimscript
   -- copy all lines that were changed
   for i = 1, min_len do
     local output_line = output[i]
@@ -130,7 +130,7 @@ function lua_format_format()
 
   -- end
   local configFile, flags = getConfigFile()
-  print(config_file, "flag:" .. flags)
+  print(config_file, " flags:" .. flags)
   print("error_file:" .. error_file)
   printFileContent(config_file)
 
@@ -148,7 +148,7 @@ function lua_format_format()
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
       -- clear message buffer
-      vim.cmd("messages clear")
+      cmd("messages clear")
 
       -- api.nvim_call_function('lexpr', { "" })
       -- api.nvim_call_function('lwindow', {})
