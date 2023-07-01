@@ -17,6 +17,7 @@ if not ok then
   -- not loaded
   print(result)
   require("vim-lua-formatter")
+  showAutoDismissMessage("require lua-formatdefined", 3000) 
 end
 -- print(lua_formatter, "define lua_format as lua_format_format")
 function lua_format() lua_format_format() end
