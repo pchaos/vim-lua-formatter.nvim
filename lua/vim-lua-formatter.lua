@@ -1,4 +1,4 @@
--- Last Modified: 2023-06-30 18:44:30
+-- Last Modified: 2023-07-01 16:19:36
 
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
@@ -14,7 +14,7 @@ local function GetPluginDirectory()
 end
 
 local function printFileContent(filePath)
-  if filePath and filePath ~= "" then  -- 判断文件名是否为空或者空字符串
+  if filePath and filePath ~= "" then -- 判断文件名是否为空或者空字符串
     local file = io.open(filePath, "r")
     if file then
       local content = file:read("*a")
@@ -56,29 +56,27 @@ local function getConfigFile()
     flags = flags .. " -c " .. config_file
   else
     local pluginDirectory = GetPluginDirectory()
-    print("插件所在目录：" .. pluginDirectory)
-    local currentDirectory=pluginDirectory
+    -- print("插件所在目录：" .. pluginDirectory)
+    local currentDirectory = pluginDirectory
     while true do
-            local found_file = fn.findfile(".lua-format.default", currentDirectory)
+      local found_file = fn.findfile(".lua-format.default", currentDirectory)
       if found_file and found_file ~= "" then
         config_file = found_file
-    -- print("getConfigFile found: " .. config_file)
+        -- print("getConfigFile found: " .. config_file)
         break
       end
-    -- print("getConfigFile: " .. config_file)
+      -- print("getConfigFile: " .. config_file)
 
-    local parentDirectory = currentDirectory:gsub('[^/]+$', '')
-    if parentDirectory == currentDirectory then
-      break
-    end
+      local parentDirectory = currentDirectory:gsub('[^/]+$', '')
+      if parentDirectory == currentDirectory then break end
 
-    currentDirectory = parentDirectory
-  end
-
+      currentDirectory = parentDirectory
+local cmd = vim.cmd -- execute Vim commands
+local exec = vim.api.nvim_exec -- execute Vimscript
     if config_file ~= "" then flags = flags .. " -c " .. config_file end
-  end
-
-    -- print("getConfigFile return: " .. config_file)
+local fn = vim.fn -- call Vim functions
+local g = vim.g -- global variables
+  -- print("getConfigFile return: " .. config_file)
   return config_file, flags
 end
 
@@ -118,37 +116,23 @@ function lua_format_format()
 
   -- create a temporary file to capture error messages
   local error_file = fn.tempname()
-
-  -- local flags = " -i "
-
-  -- -- use config file for formatting if available
-  -- local config_file = fn.findfile(".lua-format", ".;")
-  -- if config_file ~= "" then
-  --   flags = flags .. " -c " .. config_file
-  -- else
-  --   -- todo 如果没有找到".lua-format"文件，则使用插件提供的默认配置文件：".lua-format.default"
-  --   local pluginDirectory = GetPluginDirectory()
-  --   print("插件所在目录：" .. pluginDirectory)
-  --   config_file = fn.findfile(".lua-format.default", "pluginDirectory;pluginDirectory/**")
-  --   if config_file ~= "" then flags = flags .. " -c " .. config_file end
-
-  -- end
+local opt = vim.opt -- global/buffer/windows-scoped options
   local configFile, flags = getConfigFile()
-  print(configFile, " flags:" .. flags)
-  print("error_file:" .. error_file)
+  -- print(configFile, " flags:" .. flags)
+  -- print("error_file:" .. error_file)
   -- printFileContent(configFile)
 
   local executableExists = isExecutableExists("lua-format")
   if executableExists then
-    print("可执行文件lua-format存在")
+    -- print("可执行文件lua-format存在")
     --
     local command = "lua-format " .. flags .. " 2> " .. error_file
     output = fn.systemlist(command, input)
     -- local output = fn.system(command, input)
-    print("input:" .. #input)
+    -- print("input:" .. #input)
     -- printValue(input)
     -- print(command)
-    print(" output:" .. #output)
+    -- print(" output:" .. #output)
     -- print(command)
     -- printValue(output)
     if #output > 0 then -- all right
@@ -156,34 +140,28 @@ function lua_format_format()
 
       -- clear message buffer
       cmd("messages clear")
-
+local api = vim.api
       -- api.nvim_call_function('lexpr', { "" })
       -- api.nvim_call_function('lwindow', {})
       api.nvim_set_current_win(current_win)
-      -- cmd("lexpr \"\"")
-      -- cmd("lwindow")
     else -- we got an error
       print("Something error!")
       local errors = fn.readfile(error_file)
 
       -- insert filename of current buffer in front of the list. Needed for errorformat
       local source_file = fn.bufname("%")
+      -- Insert filename of current buffer at the beginning of the list
       table.insert(errors, 1, source_file)
-
--- Insert filename of current buffer at the beginning of the list
--- table.insert(errors, 1, {source_file, ''}) -- Add an empty quickfix text
 
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
       api.nvim_command(":call setloclist(0, " .. vim.inspect(errors) .. ")")
-      -- api.nvim_call_function('setloclist', { 0, errors })
-      -- api.nvim_call_function('lwindow', {5})
-      -- 切换到窗口编号 5
+      -- 切换到窗口 
       api.nvim_set_current_win(current_win)
       -- delete the temporary file
       fn.delete(error_file)
     end
   else
-    print("可执行文件lua-format不存在")
+    print("可执行文件lua-format不存在,请先安装lua-format")
     return
   end
 
