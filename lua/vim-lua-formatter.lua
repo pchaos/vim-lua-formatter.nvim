@@ -90,30 +90,30 @@ end
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
+
+-- 获取当前窗口
+local current_win = api.nvim_get_current_win()
   -- copy all lines that were changed
   for i = 1, min_len do
     local output_line = output[i]
     local input_line = input[i]
     if input_line ~= output_line then 
-      api.nvim_buf_set_lines(0, i, i, false, { output_line }) 
+      api.nvim_buf_set_lines(current_win, i, i, false, { output_line }) 
     end
   end
 
-  -- handle all lines that were in range
-  if #input ~= #output then
-    if min_len == #output then
-      -- remove all extra lines from input
-      api.nvim_buf_set_lines(0, min_len + 1, -1, false, {})
-    else
-      -- append all extra lines from output
-      local extra_lines = {}
-      for j = min_len + 1, #output do 
-        table.insert(extra_lines, output[j]) 
-      end
-      api.nvim_buf_set_lines(0, -1, -1, true, extra_lines)
+  -- in this case we have to handle all lines that were in range
+if #input ~= #output then
+  if min_len == #output then -- remove all extra lines from input
+    api.nvim_buf_set_lines(current_win, min_len + 1, -1, false, {})
+  else -- append all extra lines from output
+    local extra_lines = {}
+    for j = min_len + 1, #output do
+      table.insert(extra_lines, output[j])
     end
+    api.nvim_buf_set_lines(current_win, -1, -1, true, extra_lines)
   end
-
+end
   -- redraw windows to prevent invalid data display
   cmd("redraw!")
 end
