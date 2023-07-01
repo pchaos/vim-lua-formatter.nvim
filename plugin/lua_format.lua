@@ -2,7 +2,7 @@
 
 local api = vim.api
 if api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 1 then
-  showAutoDismissMessage("lua-format loaded", 3000) 
+  print("lua-format loaded", 3000) 
   return
 end
 
