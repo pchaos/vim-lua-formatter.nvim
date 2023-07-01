@@ -128,6 +128,8 @@ end
 end
 
 function lua_format_format()
+  local current_cmdheight= opt.cmdheight
+  opt.cmdheight = 8
   showAutoDismissMessage("lua-format start", 3000) 
   -- 获取当前活动窗口
   local current_win = api.nvim_get_current_win()
@@ -182,10 +184,11 @@ function lua_format_format()
       fn.delete(error_file)
     end
   else
-    print("可执行文件lua-format不存在,请先安装lua-format")
-    return
+    -- print("可执行文件lua-format不存在,请先安装lua-format")
+    showAutoDismissMessage("可执行文件lua-format不存在,请先安装lua-format")
   end
 
+  opt.cmdheight =current_cmmdheight 
 end
 
 -- local cmd = vim.cmd -- execute Vim commands
