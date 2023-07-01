@@ -1,4 +1,4 @@
--- Last Modified: 2023-07-02 00:54:34
+-- Last Modified: 2023-07-02 01:06:31
 
 local api = vim.api
 if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 0 then
@@ -10,7 +10,7 @@ local cmd = vim.cmd
 local o = vim.o
 local save_cpo = o.cpo -- save user coptions
 o.cpo = vim.o.cpo .. 'vim' -- reset them to defaults
-if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 0 then
+if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') == 0 then
 local ok, result = pcall(require, 'vim-lua-formatter')
 if not ok then
   -- not loaded
