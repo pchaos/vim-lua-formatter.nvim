@@ -1,7 +1,7 @@
--- Last Modified: 2023-07-02 00:52:06
+-- Last Modified: 2023-07-02 00:54:34
 
 local api = vim.api
-if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 1 then
+if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 0 then
   print("lua-format loaded", 3000)
   return
 end
@@ -16,7 +16,7 @@ if not ok then
   -- not loaded
   print(result)
   require("vim-lua-formatter")
-  showAutoDismissMessage("require lua-formatdefined", 3000) 
+  showAutoDismissMessage("require lua-formatdefined", 3000)
 end
 -- print(lua_formatter, "define lua_format as lua_format_format")
 function lua_format() lua_format_format() end
