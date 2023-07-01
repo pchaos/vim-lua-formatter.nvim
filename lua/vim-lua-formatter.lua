@@ -13,6 +13,17 @@ local function GetPluginDirectory()
   return pluginDirectory
 end
 
+function showAutoDismissMessage(message, timeout)
+  -- 调用函数显示消息（使用默认的五秒超时时间）
+  -- showAutoDismissMessage("这是一条自动消失的消息")
+  timeout = timeout or 5000 -- 如果没有提供超时时间参数，则使用默认值（单位为毫秒）
+  
+  vim.notify(message, vim.log.levels.INFO, {
+    timeout = timeout
+  })
+end
+
+
 local function printFileContent(filePath)
   if filePath and filePath ~= "" then  -- 判断文件名是否为空或者空字符串
     local file = io.open(filePath, "r")
@@ -91,27 +102,25 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
 
--- 获取当前窗口
-local current_win = api.nvim_get_current_win()
   -- copy all lines that were changed
   for i = 1, min_len do
     local output_line = output[i]
     local input_line = input[i]
     if input_line ~= output_line then 
-      api.nvim_buf_set_lines(current_win, i, i, false, { output_line }) 
+      api.nvim_buf_set_lines(0, i, i, false, { output_line }) 
     end
   end
 
   -- in this case we have to handle all lines that were in range
 if #input ~= #output then
   if min_len == #output then -- remove all extra lines from input
-    api.nvim_buf_set_lines(current_win, min_len + 1, -1, false, {})
+    api.nvim_buf_set_lines(0, min_len + 1, -1, false, {})
   else -- append all extra lines from output
     local extra_lines = {}
     for j = min_len + 1, #output do
       table.insert(extra_lines, output[j])
     end
-    api.nvim_buf_set_lines(current_win, -1, -1, true, extra_lines)
+    api.nvim_buf_set_lines(0, -1, -1, true, extra_lines)
   end
 end
   -- redraw windows to prevent invalid data display
@@ -146,6 +155,7 @@ function lua_format_format()
     -- print(command)
     -- printValue(output)
     if #output > 0 then -- all right
+      showAutoDismissMessage("lua-format success.", 3000) 
       lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
 
       -- clear message buffer
