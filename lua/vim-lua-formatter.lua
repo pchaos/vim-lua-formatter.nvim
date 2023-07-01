@@ -128,6 +128,7 @@ end
 end
 
 function lua_format_format()
+  showAutoDismissMessage("lua-format start", 3000) 
   -- 获取当前活动窗口
   local current_win = api.nvim_get_current_win()
 
