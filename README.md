@@ -2,6 +2,8 @@
 
 vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrite wth lua.
 
+_Add default lua-format config file:".lua_format.default"(when not found ".lua-format" then using this default config file)._
+
 Lua vim formatter supported by [LuaFormatter](https://github.com/Koihik/LuaFormatter).
 
 ## Install
