@@ -1,7 +1,10 @@
 -- Last Modified: 2023-07-01 19:20:15
 
 local api = vim.api
-if api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 0 then return end
+if api.nvim_eval('exists("g:loaded_vim_lua_formatter")') ~= 1 then
+  showAutoDismissMessage("lua-format loaded", 3000) 
+  return
+end
 
 local cmd = vim.cmd
 local o = vim.o
