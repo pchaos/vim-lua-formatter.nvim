@@ -17,6 +17,7 @@ if not ok then
 end
 -- print(lua_formatter, "define lua_format as lua_format_format")
 function lua_format() lua_format_format() end
+  showAutoDismissMessage("lua-format defined", 3000) 
 end
 
 o.cpo = save_cpo -- and restore after
