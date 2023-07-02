@@ -18,7 +18,6 @@ function showAutoDismissMessage(message, timeout)
   -- showAutoDismissMessage("这是一条自动消失的消息")
   timeout = timeout or 5000 -- 如果没有提供超时时间参数，则使用默认值（单位为毫秒）
   
-  -- opt.cmdheight =opt.cmdheight + 1
   vim.notify(message, vim.log.levels.INFO, {
     timeout = timeout
   })
@@ -106,7 +105,7 @@ local cursor_pos = vim.api.nvim_win_get_cursor(0)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
 
-  showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
+  showAutoDismissMessage("before format: " .. #input .. "lines. After format ".. #output .. "lines", 3000)
   if #output > 0 then
     if #output == #input then
       local mt = {
