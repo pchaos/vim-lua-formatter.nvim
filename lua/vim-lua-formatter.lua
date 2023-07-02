@@ -156,7 +156,8 @@ function lua_format_format()
       -- clear message buffer
       cmd("messages clear")
 
-      exec('lexpr', { "" })
+      -- exec('lexpr',  "" )
+      api.nvim_command("lexpr ''")
       api.nvim_set_current_win(current_win)
     else -- we got an error
       print("Something error!")
