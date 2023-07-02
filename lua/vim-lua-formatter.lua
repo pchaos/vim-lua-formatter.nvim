@@ -108,14 +108,14 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     local output_line = output[i]
     local input_line = input[i]
     if input_line ~= output_line then 
-      api.nvim_buf_set_lines(0, i, i, false, { output_line }) 
+      api.nvim_buf_set_lines(0, i-1, i-1, false, { output_line }) 
     end
   end
 
   -- in this case we have to handle all lines that were in range
 if #input ~= #output then
   if min_len == #output then -- remove all extra lines from input
-    api.nvim_buf_set_lines(0, min_len + 1, -1, false, {})
+    api.nvim_buf_set_lines(0, min_len , -1, false, {})
   else -- append all extra lines from output
     local extra_lines = {}
     for j = min_len + 1, #output do
