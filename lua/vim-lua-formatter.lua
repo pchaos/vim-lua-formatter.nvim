@@ -129,7 +129,7 @@ setmetatable(output, mt)
 -- 比较两个table的内容是否相等
 if input == output then
   -- 不需要格式化代码
-  break
+  return
 end
     end
     -- Clearing a Buffer
