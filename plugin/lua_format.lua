@@ -1,4 +1,4 @@
--- Last Modified: 2023-07-02 19:04:53
+-- Last Modified: 2023-07-02 19:08:31
 local api = vim.api
 if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 0 then
   print("lua-format loaded", 3000)
@@ -21,7 +21,7 @@ if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') == 0 then
   function luaformat()
     lua_format_format()
   end
-  showAutoDismissMessage("lua-format defined", 3000)
+  -- showAutoDismissMessage("lua-format defined", 3000)
 end
 
 o.cpo = save_cpo -- and restore after
