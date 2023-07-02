@@ -129,6 +129,7 @@ setmetatable(output, mt)
 -- 比较两个table的内容是否相等
 if input == output then
   -- 不需要格式化代码
+      showAutoDismissMessage("No need to format.")
   return
 end
     end
@@ -142,6 +143,7 @@ end
     api.nvim_buf_set_lines(bufname, -2, -1, true, extra_lines)
     -- 恢复光标位置
 vim.api.nvim_win_set_cursor(0, cursor_pos)
+      showAutoDismissMessage("lua-format success.", 3000) 
   end
   -- redraw windows to prevent invalid data display
   cmd("redraw!")
@@ -178,7 +180,6 @@ function lua_format_format()
     -- print(command)
     -- printValue(output)
     if #output > 0 then -- all right
-      showAutoDismissMessage("lua-format success.", 3000) 
       -- lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
       lua_format_CopyDiffToBuffer(input, output, 0)
 
