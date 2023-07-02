@@ -18,6 +18,7 @@ function showAutoDismissMessage(message, timeout)
   -- showAutoDismissMessage("这是一条自动消失的消息")
   timeout = timeout or 5000 -- 如果没有提供超时时间参数，则使用默认值（单位为毫秒）
   
+  opt.cmdheight =opt.cmdheight + 1
   vim.notify(message, vim.log.levels.INFO, {
     timeout = timeout
   })
@@ -190,19 +191,6 @@ function lua_format_format()
 
   opt.cmdheight =current_cmmdheight 
 end
-
--- local cmd = vim.cmd -- execute Vim commands
--- local exec = vim.api.nvim_exec -- execute Vimscript
--- local fn = vim.fn -- call Vim functions
--- local g = vim.g -- global variables
--- local opt = vim.opt -- global/buffer/windows-scoped options
--- local api = vim.api
-
--- local function GetPluginDirectory()
---   local scriptPath = debug.getinfo(1, 'S').source:sub(2)
---   local pluginDirectory = fn.fnamemodify(scriptPath, ':h')
---   return pluginDirectory
--- end
 
 -- local function printFileContent(filePath)
 --   if filePath and filePath ~= "" then  -- 判断文件名是否为空或者空字符串
