@@ -105,6 +105,7 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
 
   showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
   if #output > 0 then
+    -- Clearing a Buffer
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, {})
     local extra_lines = {}
     for j = 1, #output do
@@ -113,7 +114,6 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     end
     api.nvim_buf_set_lines(bufname, -1, -1, true, extra_lines)
   end
-end
   -- redraw windows to prevent invalid data display
   cmd("redraw!")
 end
