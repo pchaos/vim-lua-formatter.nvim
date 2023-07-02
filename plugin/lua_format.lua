@@ -1,4 +1,4 @@
--- Last Modified: 2023-07-02 18:49:21
+-- Last Modified: 2023-07-02 19:04:53
 local api = vim.api
 if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') ~= 0 then
   print("lua-format loaded", 3000)
@@ -18,7 +18,7 @@ if api.nvim_eval('exists("g:loaded_vim_lua_formatter_nvim")') == 0 then
     -- showAutoDismissMessage("require lua-formatdefined", 3000)
   end
   -- print(lua_formatter, "define lua_format as lua_format_format")
-  function lua_format()
+  function luaformat()
     lua_format_format()
   end
   showAutoDismissMessage("lua-format defined", 3000)
@@ -30,10 +30,10 @@ _G.vim_lua_formatter_enabled = 1 -- autocmd enabled？
 
 if _G.vim_lua_formatter_enabled == 1 then
   cmd([[
-    autocmd FileType lua nnoremap <buffer> <c-l> :lua lua_format()<cr>
+    autocmd FileType lua nnoremap <buffer> <c-l> :lua luaformat()<cr>
   ]])
 
   cmd([[
-    autocmd BufWritePre *.lua lua lua_format()
+    autocmd BufWritePre *.lua lua luaformat()
   ]])
 end
