@@ -1,6 +1,6 @@
-# vim-lua-format.nvim
+# [ vim-lua-format.nvim ](https://github.com/pchaos/vim-lua-formatter.nvim)
 
-Last Modified: 2023-07-03 00:22:18
+Last Modified: 2023-07-03 00:29:54
 
 vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrited wth lua.
 
@@ -10,7 +10,7 @@ Lua vim formatter supported by [LuaFormatter](https://github.com/Koihik/LuaForma
 
 ## Install
 
-Use lazy.nvim
+Use lazy.nvim, add this to "plugin.lua"
 
 ```
 {
@@ -18,14 +18,13 @@ Use lazy.nvim
     branch="main",
     ft={ "lua"}
 },
-
 ```
 
 And it's done!
 
 Then press `<C-K>` or simply save some `*.lua` file to format the Lua code automatically.
 
-**NOTE** if you need to use the `LuaFormat()` function directly from command mode, you should call it explicitly as `:call LuaFormat()`
+**NOTE** if you need to use the `LuaFormat()` function directly from command mode, you should call it explicitly as `:lua LuaFormat()`
 
 ## Features
 
