@@ -100,6 +100,9 @@ local function getConfigFile()
 end
 
 local function lua_format_CopyDiffToBuffer(input, output, bufname)
+  -- 在替换buffer之前，获取当前光标位置
+local cursor_pos = vim.api.nvim_win_get_cursor(0)
+
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
 
@@ -113,6 +116,8 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
       -- showAutoDismissMessage("ex " .. output[j], 3000)
     end
     api.nvim_buf_set_lines(bufname, -2, -1, true, extra_lines)
+    -- 恢复光标位置
+vim.api.nvim_win_set_cursor(0, cursor_pos)
   end
   -- redraw windows to prevent invalid data display
   cmd("redraw!")
