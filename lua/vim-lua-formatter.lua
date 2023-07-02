@@ -119,22 +119,22 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
 end
 
 -- local function lua_format_CopyDiffToBuffer(input, output, bufname)
-  prevent out of range in cickle
+  -- prevent out of range in cickle
   -- local min_len = math.min(#input, #output)
 --
   -- showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
-  copy all lines that were changed
+  -- copy all lines that were changed
   -- for i = 1, min_len do
     -- local output_line = output[i]
     -- local input_line = input[i]
     -- if input_line ~= output_line then
       -- showAutoDismissMessage(output_line, 3000)
       -- api.nvim_buf_set_lines(bufname, i-1, i-1, false, { output_line })
-      showAutoDismissMessage(i)
+      -- showAutoDismissMessage(i)
     -- end
   -- end
 --
-  in this case we have to handle all lines that were in range
+  -- in this case we have to handle all lines that were in range
 -- if #input ~= #output then
     -- showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
   -- if min_len == #output then -- remove all extra lines from input
@@ -148,10 +148,10 @@ end
     -- api.nvim_buf_set_lines(bufname, -1, -1, true, extra_lines)
   -- end
 -- end
-  redraw windows to prevent invalid data display
+  -- redraw windows to prevent invalid data display
   -- cmd("redraw!")
 -- end
---
+
 function lua_format_format()
   local current_cmdheight= opt.cmdheight
   opt.cmdheight = 8
