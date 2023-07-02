@@ -1,8 +1,8 @@
 # vim-lua-format.nvim
 
-Last Modified: 2023-07-01 16:28:23
+Last Modified: 2023-07-03 00:22:18
 
-vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrite wth lua.
+vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrited wth lua.
 
 _Add default lua-format config file:".lua_format.default"(when not found ".lua-format" then using this default config file)._
 
@@ -10,12 +10,15 @@ Lua vim formatter supported by [LuaFormatter](https://github.com/Koihik/LuaForma
 
 ## Install
 
-Use [Vundle](https://github.com/VundleVim/Vundle.vim) to get the _vim-lua-format_ plugin. After installing it you need to add the following
-lines in your `.vimrc` file:
+Use lazy.nvim
 
-```vim
-  autocmd FileType lua nnoremap <buffer> <c-k> :call LuaFormat()<cr>
-  autocmd BufWrite *.lua call LuaFormat()
+```
+{
+    "pchaos/vim-lua-formatter.nvim",
+    branch="main",
+    ft={ "lua"}
+},
+
 ```
 
 And it's done!
@@ -26,7 +29,7 @@ Then press `<C-K>` or simply save some `*.lua` file to format the Lua code autom
 
 ## Features
 
-Reformats your Lua source code.
+Reformats your Lua source code with default config file : **".lua-format.default"**.
 
 ## Extension Settings
 
@@ -36,6 +39,38 @@ The `.lua-format` file must be in the source or parent directory. If there is no
 
 ## Known Issues
 
-You may have an error that claims unknown `-i` or `-si` options. This is happening because some versions of `lua-formatter` uses different flags.
+1. You may have an error that claims unknown `-i` or `-si` options. This is happening because some versions of `lua-formatter` uses different flags.
 
-So if you get any error about unknown flag, just change it to the correct flag in [flags](https://github.com/jefersonf/vim-lua-format/blob/e94e10b969bf42b76e2558d079a2765dca5baa79/autoload/lua_format.vim#L40) string variable at `lua_format#format()` function.
+So if you get any error about unknown flag, just change it to the correct flag in [flags](https://github.com/jefersonf/vim-lua-format/blob/e94e10b969bf42b76e2558d079a2765dca5baa79/autoload/lua_format.vim#L40) string variable at `lua_format_format()` function.
+
+2. No line breaks after closing block comment
+   In files with block comments, something like this:
+
+```
+--[[
+Bigger comment
+--]]
+
+local var
+```
+
+becomes this after format with default settings.
+
+```
+--[[
+Bigger comment
+--]] local var
+```
+
+This was seen with the version included in current vscode plugin: vscode-lua-format-1.3.6
+(the lua-format binary does not include a version number)
+
+A workaround for this issue is ending a multiline comment with --]] --
+
+```
+--[[
+Bigger comment
+--]] --
+
+local var
+```
