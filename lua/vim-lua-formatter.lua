@@ -110,7 +110,7 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     local input_line = input[i]
     if input_line ~= output_line then 
       showAutoDismissMessage(output_line, 3000)
-      api.nvim_buf_set_lines(bufname, i-1, i-1, false, { output_line }) 
+      api.nvim_buf_set_lines(bufname, i-1, i-1, false, { output_line })
       -- showAutoDismissMessage(i)
     end
   end
@@ -165,7 +165,8 @@ function lua_format_format()
     -- printValue(output)
     if #output > 0 then -- all right
       showAutoDismissMessage("lua-format success.", 3000) 
-      lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
+      -- lua_format_CopyDiffToBuffer(input, output, fn.bufname("%"))
+      lua_format_CopyDiffToBuffer(input, output, 0)
 
       -- clear message buffer
       cmd("messages clear")
