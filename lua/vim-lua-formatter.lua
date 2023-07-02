@@ -18,8 +18,8 @@ function showAutoDismissMessage(message, timeout)
   -- showAutoDismissMessage("这是一条自动消失的消息")
   timeout = timeout or 5000 -- 如果没有提供超时时间参数，则使用默认值（单位为毫秒）
   
-  opt.cmdheight =opt.cmdheight + 1
-  vim.notify("^ " .. message, vim.log.levels.INFO, {
+  -- opt.cmdheight =opt.cmdheight + 1
+  vim.notify(message, vim.log.levels.INFO, {
     timeout = timeout
   })
 end
@@ -109,7 +109,7 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     local output_line = output[i]
     local input_line = input[i]
     if input_line ~= output_line then 
-      api.nvim_buf_set_lines(0, i-1, i-1, false, { output_line }) 
+      api.nvim_buf_set_lines(bufname, i-1, i-1, false, { output_line }) 
       showAutoDismissMessage(tostring(i) .. " " ..  output[i], 3000)
     end
   end
@@ -118,14 +118,14 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
 if #input ~= #output then
     showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
   if min_len == #output then -- remove all extra lines from input
-    api.nvim_buf_set_lines(0, min_len , -1, false, {})
+    api.nvim_buf_set_lines(bufname, min_len , -1, false, {})
   else -- append all extra lines from output
     local extra_lines = {}
     for j = min_len + 1, #output do
       table.insert(extra_lines, output[j])
-      showAutoDismissMessage(output[j], 3000)
+      showAutoDismissMessage("ex " .. output[j], 3000)
     end
-    api.nvim_buf_set_lines(0, -1, -1, true, extra_lines)
+    api.nvim_buf_set_lines(bufname, -1, -1, true, extra_lines)
   end
 end
   -- redraw windows to prevent invalid data display
