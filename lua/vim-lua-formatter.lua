@@ -106,7 +106,7 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
   showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
   if #output > 0 then
     -- Clearing a Buffer
-    vim.api.nvim_buf_set_lines(buf, 0, -1, true, {})
+    vim.api.nvim_buf_set_lines(bufname, 0, -1, true, {})
     local extra_lines = {}
     for j = 1, #output do
       table.insert(extra_lines, output[j])
