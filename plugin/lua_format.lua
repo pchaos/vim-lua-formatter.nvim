@@ -25,7 +25,7 @@ end
 
 o.cpo = save_cpo -- and restore after
 _G.loaded_vim_lua_formatter_nvim = 1
-_G.vim_lua_formatter_enabled = 0
+_G.vim_lua_formatter_enabled = 1
 
 if _G.vim_lua_formatter_enabled == 1 then
   cmd([[

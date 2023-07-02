@@ -105,7 +105,7 @@ local cursor_pos = vim.api.nvim_win_get_cursor(0)
   -- prevent out of range in cickle
   local min_len = math.min(#input, #output)
 
-  showAutoDismissMessage("before format: " .. #input .. "lines. After format ".. #output .. "lines", 3000)
+  showAutoDismissMessage("Before format: " .. #input .. " lines. After format ".. #output .. " lines", 3000)
   if #output > 0 then
     if #output == #input then
       local mt = {
