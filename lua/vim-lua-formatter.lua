@@ -110,8 +110,8 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     local input_line = input[i]
     if input_line ~= output_line then 
       api.nvim_buf_set_lines(bufname, i-1, i-1, false, { output_line }) 
-      showAutoDismissMessage(i)
-      showAutoDismissMessage(output[i], 3000)
+      -- showAutoDismissMessage(i)
+      showAutoDismissMessage(output_line, 3000)
     end
   end
 
