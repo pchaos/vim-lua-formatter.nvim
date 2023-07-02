@@ -109,12 +109,13 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     vim.api.nvim_buf_set_lines(bufname, 0, -1, true, {})
     local extra_lines = {}
     for j = 1, #output do
-      if not(j ==0 and output[j] == "") then
       table.insert(extra_lines, output[j])
       showAutoDismissMessage("ex " .. output[j], 3000)
-      end
     end
-    api.nvim_buf_set_lines(bufname, -1, -1, true, extra_lines)
+    api.nvim_buf_set_lines(bufname, -2, -1, true, extra_lines)
+      if not(j ==0 and output[j] == "") then
+
+      end
   end
   -- redraw windows to prevent invalid data display
   cmd("redraw!")
