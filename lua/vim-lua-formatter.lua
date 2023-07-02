@@ -108,6 +108,30 @@ local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
   showAutoDismissMessage("input " .. #input .. " output ".. #output, 3000)
   if #output > 0 then
+    if #output == #input then
+      local mt = {
+  __eq = function(t1, t2)
+    -- 比较两个table的内容是否相同
+    if #t1 ~= #t2 then
+      return false
+    end
+    for i = 1, #t1 do
+      if t1[i] ~= t2[i] then
+        return false
+      end
+    end
+    return true
+  end
+}
+-- 设置table的元表
+setmetatable(input, mt)
+setmetatable(output, mt)
+-- 比较两个table的内容是否相等
+if input == output then
+  -- 不需要格式化代码
+  break
+end
+    end
     -- Clearing a Buffer
     vim.api.nvim_buf_set_lines(bufname, 0, -1, true, {})
     local extra_lines = {}
