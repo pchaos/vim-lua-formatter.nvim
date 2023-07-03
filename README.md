@@ -1,6 +1,6 @@
-# [ vim-lua-format.nvim ](https://github.com/pchaos/vim-lua-formatter.nvim)
+# [vim-lua-format.nvim](https://github.com/pchaos/vim-lua-formatter.nvim)
 
-Last Modified: 2023-07-03 10:49:31
+Last Modified: 2023-07-03 00:00:00
 
 vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrited wth lua.
 
@@ -10,7 +10,7 @@ Lua vim formatter supported by [LuaFormatter(lua-format)](https://github.com/Koi
 
 ## Install
 
-Use lazy.nvim, add this to "plugin.lua"
+Use `lazy.nvim`, add this to "plugin.lua"
 
 ```
 {
@@ -40,7 +40,7 @@ The `.lua-format` file must be in the source or parent directory. If there is no
 
 1. You may have an error that claims unknown `-i` or `-si` options. This is happening because some versions of `lua-formatter` uses different flags.
 
-So if you get any error about unknown flag, just change it to the correct flag in [flags](https://github.com/jefersonf/vim-lua-format/blob/e94e10b969bf42b76e2558d079a2765dca5baa79/autoload/lua_format.vim#L40) string variable at `lua_format_format()` function.
+So if you get any error about unknown flag, just change it to the correct flag in [flags](https://github.com/pchaos/vim-lua-formatter.nvim/blob/main/lua/vim-lua-formatter.lua#L149) string variable at `lua_format_format()` function.
 
 2. No line breaks after closing block comment
    In files with block comments, something like this:
