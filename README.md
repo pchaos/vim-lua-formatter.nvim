@@ -1,12 +1,12 @@
 # [ vim-lua-format.nvim ](https://github.com/pchaos/vim-lua-formatter.nvim)
 
-Last Modified: 2023-07-03 00:29:54
+Last Modified: 2023-07-03 10:49:31
 
 vim-lua-format.nvim is forked from [vim-lua-format](https://github.com/andrejlevkovitch/vim-lua-format), and rewrited wth lua.
 
 _Add default lua-format config file:".lua_format.default"(when not found ".lua-format" then using this default config file)._
 
-Lua vim formatter supported by [LuaFormatter](https://github.com/Koihik/LuaFormatter).
+Lua vim formatter supported by [LuaFormatter(lua-format)](https://github.com/Koihik/LuaFormatter).
 
 ## Install
 
@@ -45,7 +45,7 @@ So if you get any error about unknown flag, just change it to the correct flag i
 2. No line breaks after closing block comment
    In files with block comments, something like this:
 
-```
+```lua
 --[[
 Bigger comment
 --]]
@@ -53,20 +53,19 @@ Bigger comment
 local var
 ```
 
-becomes this after format with default settings.
+becomes this after format with `lua-format` default settings.
 
-```
+```lua
 --[[
 Bigger comment
 --]] local var
 ```
 
-This was seen with the version included in current vscode plugin: vscode-lua-format-1.3.6
-(the lua-format binary does not include a version number)
+This was seen with the version included in current formatter:`lua-format` (version 1.3.6)
 
 A workaround for this issue is ending a multiline comment with --]] --
 
-```
+```lua
 --[[
 Bigger comment
 --]] --
