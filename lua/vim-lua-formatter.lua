@@ -1,4 +1,4 @@
--- Last Modified: 2023-07-02 18:43:35
+-- Last Modified: 2024-02-28 18:21:42
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 local fn = vim.fn -- call Vim functions
@@ -139,6 +139,10 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     end
     api.nvim_buf_set_lines(bufname, -2, -1, true, extra_lines)
     -- 恢复光标位置
+    if min_len > cursor_pos[1] then
+      cursor_pos[1] = min_len
+    end
+
     vim.api.nvim_win_set_cursor(0, cursor_pos)
     showAutoDismissMessage("lua-format success.", 3000)
   end
@@ -197,7 +201,7 @@ function lua_format_format()
 
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
       api.nvim_command(":call setloclist(0, " .. vim.inspect(errors) .. ")")
-      -- 切换到窗口 
+      -- 切换到窗口
       api.nvim_set_current_win(current_win)
       -- delete the temporary file
       fn.delete(error_file)
@@ -207,5 +211,5 @@ function lua_format_format()
     showAutoDismissMessage("可执行文件lua-format不存在,请先安装lua-format")
   end
 
-  -- opt.cmdheight =current_cmmdheight 
+  -- opt.cmdheight =current_cmmdheight
 end
