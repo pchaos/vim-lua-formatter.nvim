@@ -1,4 +1,4 @@
--- Last Modified: 2024-03-01 10:42:13
+-- Last Modified: 2024-03-01 11:33:57
 local cmd = vim.cmd -- execute Vim commands
 local exec = vim.api.nvim_exec -- execute Vimscript
 local fn = vim.fn -- call Vim functions
@@ -139,11 +139,11 @@ local function lua_format_CopyDiffToBuffer(input, output, bufname)
     end
     api.nvim_buf_set_lines(bufname, -2, -1, true, extra_lines)
     -- 恢复光标位置
-    if min_len > cursor_pos[1] then
+    if min_len < cursor_pos[1] then
       showAutoDismissMessage("min_len:" .. min_len .. " cursor_pos[1]:" .. cursor_pos[1], 3000)
-      showAutoDismissMessage("cursor_pos:" .. cursor_pos, 3000)
+      -- showAutoDismissMessage("cursor_pos:" .. cursor_pos, 3000)
       cursor_pos[1] = min_len
-      showAutoDismissMessage("cursor_pos:" .. cursor_pos, 3000)
+      -- showAutoDismissMessage("cursor_pos:" .. cursor_pos, 3000)
     end
 
     vim.api.nvim_win_set_cursor(0, cursor_pos)
@@ -203,7 +203,7 @@ function lua_format_format()
       table.insert(errors, 1, source_file)
 
       opt.efm = "%+P%f,line\\ %l:%c\\ %m,%-Q"
-      api.nvim_command(":call setloclist(0, " .. vim.inspect(errors) .. ")")
+      api.nvim_command(":call se*loclist(0, " .. vim.inspect(errors) .. ")")
       -- 切换到窗口
       api.nvim_set_current_win(current_win)
       -- delete the temporary file
